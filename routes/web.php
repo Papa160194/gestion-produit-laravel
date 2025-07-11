@@ -1,13 +1,20 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
 
-// Page d'accueil
 Route::get('/', function () {
-    $products = \App\Models\Product::latest()->take(6)->get();
-    return view('home', compact('products'));
-})->name('home');
+    return view('welcome');
+});
 
-// Routes CRUD pour les produits
-Route::resource('products', ProductController::class);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('verified');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('verified');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy')->middleware('verified');
+});
+
+require __DIR__.'/auth.php';

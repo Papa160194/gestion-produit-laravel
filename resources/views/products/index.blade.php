@@ -19,7 +19,7 @@
 
     @if($products->count() > 0)
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-            @foreach($products as $product)
+            @foreach($products as $product) 
                 <div class="bg-white rounded-3xl apple-shadow p-6 flex flex-col items-center hover:scale-105 transition-transform">
                     @if($product->image)
                         <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}" class="w-40 h-40 object-cover rounded-2xl mb-4">
